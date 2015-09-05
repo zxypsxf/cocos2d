@@ -32,7 +32,13 @@ public:
 	void StateToFail();
 	void StateToWin();
 
+	// 触摸事件
+	bool onTouchBegan(Touch *touch,Event* event);
+	void onTouchMoved(Touch *touch,Event* event);
+	void onTouchEnded(Touch *touch,Event* event);
+
 	void ShowLevel();
+	void Shoot(float shootSpeed);
 	void QuitGame();
 
 private:
@@ -46,6 +52,9 @@ private:
 	rotatorMan* rMan;
 	int totalLevelNum;
 	LevelInfo levelConfig[20];
+	LabelTTF* label;
+	// 滑动速度
+	float slideSpeed;
 };
 
 #endif // __HELLOWORLD_SCENE_H__

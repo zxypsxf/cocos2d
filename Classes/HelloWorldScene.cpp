@@ -55,11 +55,11 @@ bool HelloWorld::init()
 	this->addChild(gameUI,2);
 
 	levelNow=0;
-    
+    // 获取屏幕坐标
     auto visibleSize = Director::getInstance()->getVisibleSize();
     auto origin = Director::getInstance()->getVisibleOrigin();
 	auto centerPoint = origin+visibleSize/2;
-
+	// 转盘管理器
 	rMan=rotatorMan::create();
 	this->addChild(rMan);
 	rMan->setPosition(centerPoint);
@@ -71,7 +71,7 @@ bool HelloWorld::init()
     // add a label shows "Hello World"
     // create and initialize a label
     
-    auto label = LabelTTF::create("Hello World", "Arial", TITLE_FONT_SIZE);
+    label = LabelTTF::create("Hello World", "Arial", TITLE_FONT_SIZE);
     
     // position the label on the center of the screen
     label->setPosition(origin.x + visibleSize.width/2,
@@ -79,6 +79,15 @@ bool HelloWorld::init()
 
     // add the label as a child to this layer
     this->addChild(label, 1);
+
+	//触摸事件
+	auto listener = EventListenerTouchOneByOne::create();
+    listener->setSwallowTouches(true);
+	listener->onTouchBegan = CC_CALLBACK_2(HelloWorld::onTouchBegan, this);
+    listener->onTouchMoved = CC_CALLBACK_2(HelloWorld::onTouchMoved, this);
+	listener->onTouchEnded = CC_CALLBACK_2(HelloWorld::onTouchEnded, this);
+    
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 
 	StateToBegin();
   
@@ -187,8 +196,29 @@ void HelloWorld::QuitGame()
     exit(0);
 #endif
 }
-
+// 现在当前关
 void HelloWorld::ShowLevel()
 {
 	rMan->createRotator(levelConfig[levelNow]);
+}
+// 触摸事件
+bool HelloWorld::onTouchBegan(Touch *touch,Event* event)
+{
+	CCLOG("Begin");
+	return true;
+}
+void HelloWorld::onTouchMoved(Touch *touch,Event* event)
+{
+	char temp[100];
+	sprintf(temp,"%f,%f,%f",touch->getLocation().x,touch->getLocation().y,touch->getDelta().y);
+	label->setString(temp);
+	slideSpeed=touch->getDelta().y;
+}
+void HelloWorld::onTouchEnded(Touch *touch,Event* event)
+{
+	CCLOG("ENDED");
+}
+void HelloWorld::Shoot(float shootSpeed)
+{
+
 }
