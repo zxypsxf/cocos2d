@@ -31,6 +31,10 @@ private:
 	MenuItem* menuItem_quit;
 	MenuItem* menuItem_resume;
 	MenuItem* menuItem_replay;
-	MenuItem* menuItem_sound;	
+	MenuItem* menuItem_sound;
+	// 菜单项显示与隐藏
+	Action* hideMove;
+	Action* showMove;
+	Vec2 visibleSize;
 };
 

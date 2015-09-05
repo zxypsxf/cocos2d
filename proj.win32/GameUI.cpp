@@ -11,7 +11,7 @@ bool GameUI::init()
 	{
 		return false;
 	}
-	auto visibleSize = Director::getInstance()->getVisibleSize();
+	visibleSize = Director::getInstance()->getVisibleSize();
     auto origin = Director::getInstance()->getVisibleOrigin();
 	auto centerPoint = origin+visibleSize/2;
 	// 开始菜单 
@@ -33,10 +33,11 @@ bool GameUI::init()
 	menuItem_sound = MenuItemFont::create("Sound",CC_CALLBACK_1(GameUI::menuSoundCallback,this));
 	menuItem_sound->setPosition(origin+visibleSize-menuItem_sound->getContentSize()/2);
 
-	menu = Menu::create(menuItem_begin,menuItem_quit,menuItem_resume,menuItem_replay,menuItem_sound,nullptr);
+	menu = Menu::create(menuItem_begin,menuItem_next,menuItem_quit,menuItem_resume,menuItem_replay,menuItem_sound,nullptr);
 	menu->setPosition(Vec2::ZERO);
 	this->addChild(menu);
-	HideAll();
+	hideMove=MoveBy::create(0,visibleSize);
+	showMove=MoveBy::create(0,-visibleSize);
 
 	return true;
 }
@@ -74,21 +75,25 @@ void GameUI::menuSoundCallback(Ref* sender)
 // 显示菜单项
 void GameUI::ShowBegin()
 {
+	HideAll();
 	menuItem_begin->setVisible(true);
 	menuItem_quit->setVisible(true);
 }
 void GameUI::ShowNext()
 {
+	HideAll();
 	menuItem_next->setVisible(true);
 	menuItem_quit->setVisible(true);
 }
 void GameUI::ShowResume()
 {
+	HideAll();
 	menuItem_resume->setVisible(true);
 	menuItem_quit->setVisible(true);
 }
 void GameUI::ShowReplay()
 {
+	HideAll();
 	menuItem_replay->setVisible(true);
 	menuItem_quit->setVisible(true);
 }
@@ -96,9 +101,9 @@ void GameUI::HideAll()
 {
 	menuItem_begin->setVisible(false);
 	menuItem_next->setVisible(false);
-	menuItem_resume->setVisible(false);
-	menuItem_replay->setVisible(false);
 	menuItem_quit->setVisible(false);
+	menuItem_replay->setVisible(false);
+	menuItem_resume->setVisible(false);
 }
 
 GameUI::~GameUI(void)

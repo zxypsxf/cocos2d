@@ -35,6 +35,19 @@ bool HelloWorld::init()
     {
         return false;
     }
+	//关卡信息
+	totalLevelNum=3;
+	levelConfig[0].level_num=1;
+	levelConfig[0].ball_num1=2;
+	levelConfig[0].rSpeed=5;
+	levelConfig[1].level_num=1;
+	levelConfig[1].ball_num1=2;
+	levelConfig[1].rSpeed=5;
+	levelConfig[2].level_num=1;
+	levelConfig[2].ball_num1=2;
+	levelConfig[2].rSpeed=5;
+
+
 	// 生成菜单
 	gameUI=GameUI::create();
 	NotificationCenter::getInstance()->addObserver(this,callfuncO_selector(HelloWorld::menuCallback),"uiEvent",NULL);
@@ -42,7 +55,6 @@ bool HelloWorld::init()
 	this->addChild(gameUI,2);
 
 	levelNow=0;
-	StateToBegin();
     
     auto visibleSize = Director::getInstance()->getVisibleSize();
     auto origin = Director::getInstance()->getVisibleOrigin();
@@ -50,26 +62,8 @@ bool HelloWorld::init()
 
 	rMan=rotatorMan::create();
 	this->addChild(rMan);
+	rMan->setPosition(centerPoint);
 
-	LevelInfo levelInfo1;
-	levelInfo1.ball_num1=5;
-	rMan->createRotator(levelInfo1);
-    /////////////////////////////
-    // 2. add a menu item with "X" image, which is clicked to quit the program
-    //    you may modify it.
-
-    // add a "close" icon to exit the progress. it's an autorelease object
-    auto closeItem = MenuItemImage::create(
-                                        "CloseNormal.png",
-                                        "CloseSelected.png",
-                                        CC_CALLBACK_1(HelloWorld::menuCloseCallback,this));
-    
-    closeItem->setPosition(origin  + Vec2(closeItem->getContentSize() / 2));
-
-    // create menu, it's an autorelease object
-    auto menu = Menu::create(closeItem, nullptr);
-    menu->setPosition(Vec2::ZERO);
-    this->addChild(menu, 1);
     
     /////////////////////////////
     // 3. add your codes below...
@@ -85,6 +79,8 @@ bool HelloWorld::init()
 
     // add the label as a child to this layer
     this->addChild(label, 1);
+
+	StateToBegin();
   
     return true;
 }
@@ -96,14 +92,40 @@ void HelloWorld::StateToBegin()
 }
 void HelloWorld::StateToPlaying()
 {
-	stateNow=statePlaying;
+	auto statePre=stateNow;
 	gameUI->HideAll();
+	// 开始进入游戏
+	if (statePre==stateBegin)
+	{
+		ShowLevel();
+	}
+	// 重试本关
+	else if (statePre==stateFail)
+	{
+		rMan->createRotator(levelConfig[levelNow]);
+	}
+	//下一关
+	else if (statePre==stateWin)
+	{
+		if (levelNow<totalLevelNum-1)
+		{
+			levelNow++;
+			ShowLevel();
+		}
+	}
+	//回到游戏
+	else if (statePre==statePause)
+	{
+		rMan->Rotate();
+	}
+	stateNow=statePlaying;
 }
 void HelloWorld::StateToPause()
 {
 	if (stateNow==statePlaying)
 	{
 		stateNow=statePause;
+		rMan->StopRotate();
 		gameUI->ShowResume();
 	}
 }
@@ -120,7 +142,7 @@ void HelloWorld::StateToWin()
 	if (stateNow==statePlaying)
 	{
 		stateNow=stateWin;
-	
+		gameUI->ShowNext();
 	}
 }
 // 处理菜单事件
@@ -129,33 +151,30 @@ void HelloWorld::menuCallback(Ref* sender)
 	auto msg = (String*)sender;
 	if (msg->isEqual(String::create("begin")))
 	{
-		
-		LevelInfo levelInfo1;
-		levelInfo1.level_num=1;
-		log("testMsg-%d: %s",levelInfo1.level_num,msg->getCString()); 
+		StateToPlaying();
 	}
 	else if(msg->isEqual(String::create("next")))
 	{
-		log("testMsg: %s",msg->getCString()); 
+		StateToPlaying();
 	}
     else if(msg->isEqual(String::create("resume")))
 	{
-		log("testMsg: %s",msg->getCString()); 
+		StateToPlaying();
 	}
 	else if(msg->isEqual(String::create("replay")))
 	{
-		log("testMsg: %s",msg->getCString()); 
+		StateToPlaying();
 	}
 	else if(msg->isEqual(String::create("quit")))
 	{
-		log("testMsg: %s",msg->getCString()); 
+		QuitGame();
 	}
 	else if(msg->isEqual(String::create("sound")))
 	{
-		log("testMsg: %s",msg->getCString()); 
+		StateToPause();
 	}
 }
-void HelloWorld::menuCloseCallback(Ref* sender)
+void HelloWorld::QuitGame()
 {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 	MessageBox("You pressed the close button. Windows Store Apps do not implement a close button.","Alert");
@@ -167,4 +186,9 @@ void HelloWorld::menuCloseCallback(Ref* sender)
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     exit(0);
 #endif
+}
+
+void HelloWorld::ShowLevel()
+{
+	rMan->createRotator(levelConfig[levelNow]);
 }

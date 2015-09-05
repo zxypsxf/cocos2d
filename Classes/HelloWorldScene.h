@@ -32,6 +32,9 @@ public:
 	void StateToFail();
 	void StateToWin();
 
+	void ShowLevel();
+	void QuitGame();
+
 private:
 	// ²Ëµ¥
 	GameUI* gameUI;
@@ -41,6 +44,8 @@ private:
 	int levelNow;
 	// ×ªÅÌ
 	rotatorMan* rMan;
+	int totalLevelNum;
+	LevelInfo levelConfig[20];
 };
 
 #endif // __HELLOWORLD_SCENE_H__
