@@ -1,0 +1,36 @@
+﻿生成启动时间为 2015/9/5 10:25:37。
+     1>项目“F:\cocos\cocos2d-x-3.4\tests\cpp-empty-test\proj.win32\cpp-empty-test.vcxproj”在节点 2 上(Build 个目标)。
+     1>InitializeBuildStatus:
+         正在创建“Debug.win32\cpp-empty-test.unsuccessfulbuild”，因为已指定“AlwaysCreate”。
+       ClCompile:
+         D:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /I..\Classes /I"F:\cocos\cocos2d-x-3.4\tests\cpp-empty-test\proj.win32" /I"F:\cocos\cocos2d-x-3.4\cocos\2d\..\..\cocos\editor-support" /I"F:\cocos\cocos2d-x-3.4\cocos\2d\..\..\cocos" /I"F:\cocos\cocos2d-x-3.4\cocos\2d\..\..\cocos\platform" /I"F:\cocos\cocos2d-x-3.4\cocos\2d\..\..\cocos\platform\desktop" /I"F:\cocos\cocos2d-x-3.4\cocos\2d\..\..\external\glfw3\include\win32" /I"F:\cocos\cocos2d-x-3.4\cocos\2d\..\..\external\win32-specific\gles\include\OGLES" /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D COCOS2D_DEBUG=1 /D _CRT_SECURE_NO_WARNINGS /D _SCL_SECURE_NO_WARNINGS /D _VARIADIC_MAX=10 /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug.win32\\" /Fd"Debug.win32\vc110.pdb" /Gd /TP /wd4267 /wd4251 /wd4244 /analyze- /errorReport:prompt ..\Classes\AppDelegate.cpp ..\Classes\HelloWorldScene.cpp GameUI.cpp
+         GameUI.cpp
+         HelloWorldScene.cpp
+     1>f:\cocos\cocos2d-x-3.4\tests\cpp-empty-test\classes\helloworldscene.cpp(58): warning C4996: 'cocos2d::LabelTTF::create': 被声明为已否决
+                 f:\cocos\cocos2d-x-3.4\cocos\2d\cclabelttf.h(82) : 参见“cocos2d::LabelTTF::create”的声明
+     1>f:\cocos\cocos2d-x-3.4\tests\cpp-empty-test\classes\helloworldscene.cpp(62): warning C4996: 'cocos2d::LabelTTF::getContentSize': 被声明为已否决
+                 f:\cocos\cocos2d-x-3.4\cocos\2d\cclabelttf.h(161) : 参见“cocos2d::LabelTTF::getContentSize”的声明
+                 f:\cocos\cocos2d-x-3.4\cocos\2d\cclabelttf.h(161) : 参见“cocos2d::LabelTTF::getContentSize”的声明
+     1>f:\cocos\cocos2d-x-3.4\tests\cpp-empty-test\classes\helloworldscene.cpp(79): warning C4305: “参数”: 从“double”到“float”截断
+     1>f:\cocos\cocos2d-x-3.4\tests\cpp-empty-test\classes\helloworldscene.cpp(86): warning C4996: 'cocos2d::LabelTTF::setString': 被声明为已否决
+                 f:\cocos\cocos2d-x-3.4\cocos\2d\cclabelttf.h(128) : 参见“cocos2d::LabelTTF::setString”的声明
+                 f:\cocos\cocos2d-x-3.4\cocos\2d\cclabelttf.h(128) : 参见“cocos2d::LabelTTF::setString”的声明
+         正在生成代码...
+         正在编译...
+         AppDelegate.cpp
+         正在生成代码...
+       Link:
+         D:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"F:\cocos\cocos2d-x-3.4\build\Debug.win32\cpp-empty-test.exe" /INCREMENTAL /NOLOGO /LIBPATH:"F:\cocos\cocos2d-x-3.4\build\Debug.win32\\" /LIBPATH:"F:\cocos\cocos2d-x-3.4\build\Debug.win32\\" glew32.lib opengl32.lib glew32.lib libzlib.lib libpng.lib libjpeg.lib libtiff.lib libwebp.lib libiconv.lib glfw3.lib freetype250.lib winmm.lib ws2_32.lib libchipmunk.lib libbox2d.lib libSpine.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"F:\cocos\cocos2d-x-3.4\build\Debug.win32\cpp-empty-test.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"F:\cocos\cocos2d-x-3.4\build\Debug.win32\cpp-empty-test.lib" /MACHINE:X86 /SAFESEH Debug.win32\AppDelegate.obj
+         Debug.win32\HelloWorldScene.obj
+         Debug.win32\GameUI.obj
+         Debug.win32\main.obj
+         "F:\cocos\cocos2d-x-3.4\build\Debug.win32\libcocos2d.lib"
+         cpp-empty-test.vcxproj -> F:\cocos\cocos2d-x-3.4\build\Debug.win32\cpp-empty-test.exe
+       FinalizeBuildStatus:
+         正在删除文件“Debug.win32\cpp-empty-test.unsuccessfulbuild”。
+         正在对“Debug.win32\cpp-empty-test.lastbuildstate”执行 Touch 任务。
+     1>已完成生成项目“F:\cocos\cocos2d-x-3.4\tests\cpp-empty-test\proj.win32\cpp-empty-test.vcxproj”(Build 个目标)的操作。
+
+生成成功。
+
+已用时间 00:00:36.07
