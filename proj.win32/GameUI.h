@@ -1,5 +1,6 @@
 #pragma once
 #include "cocos2d.h"
+
 using namespace cocos2d;
 
 class GameUI :	public cocos2d::Layer
@@ -30,6 +31,6 @@ private:
 	MenuItem* menuItem_quit;
 	MenuItem* menuItem_resume;
 	MenuItem* menuItem_replay;
-	MenuItem* menuItem_sound;
+	MenuItem* menuItem_sound;	
 };
 

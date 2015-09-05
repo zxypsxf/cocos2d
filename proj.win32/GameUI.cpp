@@ -37,35 +37,41 @@ bool GameUI::init()
 	menu->setPosition(Vec2::ZERO);
 	this->addChild(menu);
 	HideAll();
-	ShowBegin();
 
 	return true;
 }
+// 菜单回调函数
 void GameUI::menuBeginCallback(Ref* sender)
 {
-	menuItem_quit->setVisible(false);
+	auto sData = String::create("begin"); 
+	NotificationCenter::getInstance()->postNotification("uiEvent",sData);
 }
 void GameUI::menuNextCallback(Ref* sender)
 {
-
+	auto sData = String::create("next"); 
+	NotificationCenter::getInstance()->postNotification("uiEvent",sData);
 }
 void GameUI::menuQuitCallback(Ref* sender)
 {
-
+	auto sData = String::create("quit"); 
+	NotificationCenter::getInstance()->postNotification("uiEvent",sData);
 }
 void GameUI::menuResumeCallback(Ref* sender)
 {
-
+	auto sData = String::create("resume"); 
+	NotificationCenter::getInstance()->postNotification("uiEvent",sData);
 }
 void GameUI::menuReplayCallback(Ref* sender)
 {
-
+	auto sData = String::create("replay"); 
+	NotificationCenter::getInstance()->postNotification("uiEvent",sData);
 }
 void GameUI::menuSoundCallback(Ref* sender)
 {
-
+	auto sData = String::create("sound"); 
+	NotificationCenter::getInstance()->postNotification("uiEvent",sData);
 }
-
+// 显示菜单项
 void GameUI::ShowBegin()
 {
 	menuItem_begin->setVisible(true);

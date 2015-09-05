@@ -3,7 +3,14 @@
 
 USING_NS_CC;
 
-
+enum
+{
+	stateBegin,
+	statePlaying,
+	statePause,
+	stateFail,
+	stateWin,
+};
 Scene* HelloWorld::scene()
 {
     // 'scene' is an autorelease object
@@ -28,10 +35,25 @@ bool HelloWorld::init()
     {
         return false;
     }
+	// 生成菜单
+	gameUI=GameUI::create();
+	NotificationCenter::getInstance()->addObserver(this,callfuncO_selector(HelloWorld::menuCallback),"uiEvent",NULL);
+
+	this->addChild(gameUI,2);
+
+	levelNow=0;
+	StateToBegin();
     
     auto visibleSize = Director::getInstance()->getVisibleSize();
     auto origin = Director::getInstance()->getVisibleOrigin();
+	auto centerPoint = origin+visibleSize/2;
 
+	rMan=rotatorMan::create();
+	this->addChild(rMan);
+
+	LevelInfo levelInfo1;
+	levelInfo1.ball_num1=5;
+	rMan->createRotator(levelInfo1);
     /////////////////////////////
     // 2. add a menu item with "X" image, which is clicked to quit the program
     //    you may modify it.
@@ -63,35 +85,76 @@ bool HelloWorld::init()
 
     // add the label as a child to this layer
     this->addChild(label, 1);
-
-    // add "HelloWorld" splash screen"
-    auto sprite = Sprite::create("ball.png");
-
-    // position the sprite on the center of the screen
-    sprite->setPosition(Vec2(0,0));
-
-	auto rot = MoveBy::create(3,Vec2(50,50));
-	auto rep = Sequence::create(rot,rot->reverse(),nullptr);
-	Node *node=Node::create();
-	node->setPosition(origin+visibleSize/2);
-	
-	auto sprite2= Sprite::create("ball.png");
-	sprite2->setScale(0.3);
-	sprite2->setPosition(Vec2(0,0));
-	node->addChild(sprite);
-    // add the sprite as a child to this layer
-    node->addChild(sprite2);
-	char temp[100];
-	sprintf(temp,"%f,%f",sprite2->getPosition().x,sprite2->getPosition().y);
-	label->setString(temp);
-	this->addChild(node);
-	// sprite2->runAction(RepeatForever::create(rep));
-	gameUI=GameUI::create();
-	this->addChild(gameUI);
-    
+  
     return true;
 }
-
+// 状态机
+void HelloWorld::StateToBegin()
+{
+	stateNow=stateBegin;
+	gameUI->ShowBegin();
+}
+void HelloWorld::StateToPlaying()
+{
+	stateNow=statePlaying;
+	gameUI->HideAll();
+}
+void HelloWorld::StateToPause()
+{
+	if (stateNow==statePlaying)
+	{
+		stateNow=statePause;
+		gameUI->ShowResume();
+	}
+}
+void HelloWorld::StateToFail()
+{
+	if (stateNow==statePlaying)
+	{
+		stateNow=stateFail;
+		gameUI->ShowReplay();
+	}
+}
+void HelloWorld::StateToWin()
+{
+	if (stateNow==statePlaying)
+	{
+		stateNow=stateWin;
+	
+	}
+}
+// 处理菜单事件
+void HelloWorld::menuCallback(Ref* sender)
+{
+	auto msg = (String*)sender;
+	if (msg->isEqual(String::create("begin")))
+	{
+		
+		LevelInfo levelInfo1;
+		levelInfo1.level_num=1;
+		log("testMsg-%d: %s",levelInfo1.level_num,msg->getCString()); 
+	}
+	else if(msg->isEqual(String::create("next")))
+	{
+		log("testMsg: %s",msg->getCString()); 
+	}
+    else if(msg->isEqual(String::create("resume")))
+	{
+		log("testMsg: %s",msg->getCString()); 
+	}
+	else if(msg->isEqual(String::create("replay")))
+	{
+		log("testMsg: %s",msg->getCString()); 
+	}
+	else if(msg->isEqual(String::create("quit")))
+	{
+		log("testMsg: %s",msg->getCString()); 
+	}
+	else if(msg->isEqual(String::create("sound")))
+	{
+		log("testMsg: %s",msg->getCString()); 
+	}
+}
 void HelloWorld::menuCloseCallback(Ref* sender)
 {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
